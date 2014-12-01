@@ -26,3 +26,10 @@
 *.exe
 *.out
 *.app
+
+# Java
+*.class
+
+# Text editor shenanigans
+*~
+*#
