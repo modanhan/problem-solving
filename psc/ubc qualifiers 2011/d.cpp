@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <queue>
 using namespace std;
 
 typedef vector<vector<int> > graph;
@@ -60,7 +62,14 @@ int main() {
 				ansans += (ans - 2) / 2;
 			}
 			int cc=1;
-
+			int maxans = 0;
+			if (cvs.size() == 1){
+				cc--;
+			}
+			else{
+				maxans = ans / 2;
+			}
+			
 			while (find(v.begin(), v.end(), 0) != v.end()) {
 				ans=0;
 				cc++;
@@ -79,6 +88,7 @@ int main() {
 						}
 					}
 				}
+				
 				for (int i : cvs) {
 					if (g[i].size() % 2 == 1) {
 						ans++;
@@ -87,8 +97,17 @@ int main() {
 				if (ans > 2) {
 					ansans += (ans - 2) / 2;
 				}
+				if (cvs.size() == 1){
+					cc--;
+				}
+				else{
+					maxans = ans/2;
+				}
 			}
-
+			if (cc == 1){
+				cc = 0;
+				ansans = maxans;
+			}
 			cout << ansans+cc << "\n";
 		}
 
