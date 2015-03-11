@@ -1,4 +1,10 @@
-#include <bits/stdc++.h>
+//#include <bits/stdc++.h>
+
+#include <string>
+#include <vector>
+#include <queue>
+#include <iostream>
+
 using namespace std;
 
 typedef long long ll;
@@ -29,9 +35,10 @@ int main() {
 			}
 		}
 		vector<bool> v(n, 0);
-		vector<string> ans(n, "");
+		vector<char> ans(n, 0);
+		vector<int> par(n, -1);
 		queue<ll> q;
-		if (s.size()==1&&s[0]==0) {
+		if (s.size() == 1 && s[0] == 0) {
 			cout << "no solution\n";
 			continue;
 		}
@@ -48,28 +55,38 @@ int main() {
 			ll t = q.front();
 			q.pop();
 			if (t%n == 0){
-				v[0] = t;
 				ans[0] = ans[t];
 				goto good;
 			}
 			for (int nb : s) {
 				ll m = (t * 16 + nb) % n;
 				if (m == 0){
-					ans[0] = ans[t] + hexc(nb);
+					ans[0] = hexc(nb);
+					par[0] = t;
 					goto good;
 				}
 				if (v[m] == 0) {
-					ans[m] =ans[t]+ hexc(nb);
+					ans[m] = hexc(nb);
+					par[m] = t;
 					v[m] = 1;
 					q.push(m);
 				}
 			}
 		}
-		if (v[0] == 0){
-			cout << "no solution\n";
+		cout << "no solution\n";
+		continue;
+
+	good:{
+		vector<char> fin;
+		int ind = 0;
+		while (ind != -1){
+			fin.push_back(ans[ind]);
+			ind = par[ind];
 		}
-		else{
-		good: cout <<ans[0] << "\n";
+		for (int i = fin.size() - 1; i >= 0; i--){
+			cout << fin[i];
 		}
+		cout << "\n";
+	}
 	}
 }
