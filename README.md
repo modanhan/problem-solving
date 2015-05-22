@@ -1,4 +1,4 @@
 problem-solving
 ===============
-My problem solving repository.
-My uva and codeforces solutions are here.
+This is my problem solving repository.
+I have my UVa, Codeforces, and PSC practices solutions here.
