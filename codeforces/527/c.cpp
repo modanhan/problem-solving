@@ -1,24 +1,74 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <set>
+#include <algorithm>
+#include <vector>
 using namespace std;
-int main() {
-	int w, h, n;
+typedef long long ll;
+ll w, h, n;
+set<ll> sw, sh,gw,gh;
+vector<ll> vw(300000,0), vh(300000,0);
+
+int main(){
 	cin >> w >> h >> n;
-	set<int> ws, hs;
-	int wm = w, hm = h;
-	while (n--) {
-		char c;
-		int p;
-		cin >> c >> p;
-		set<int>::iterator last;
-		if (c == 'H') {
-			auto it = hs.insert(p).first;
-			hm = *hs.begin();
-			last=it;
-		} else {
-			auto it = ws.insert(p).first;
-			wm = *ws.begin();
-			last=it;
+	sw.insert(w);
+	sh.insert(h);
+	vw[w] = 1;
+	vh[h] = 1;
+	gw.insert(0);
+	gw.insert(w);
+	gh.insert(h);
+	gh.insert(0);
+	while (n--){
+		char c; ll x;
+		cin >> c >> x;
+		if (c == 'H'){
+			
+			auto l = gh.lower_bound(x);
+			auto u = l;
+			l--;
+			int length = *u - *l;
+
+			vh[length]--;
+			if (vh[length] == 0){
+				sh.erase(length);
+			}
+
+			if (vh[x - *l] == 0){
+				sh.insert(x - *l);
+			}
+			vh[x - *l]++;
+
+			if (vh[*u - x] == 0){
+				sh.insert(*u - x);
+			}
+			vh[*u - x]++;
+
+			gh.insert(x);
 		}
-		cout << hm * wm << "\n";
+		else{
+			
+			auto l = gw.lower_bound(x);
+			auto u = l;
+			l--;
+			int length = *u - *l;
+
+			vw[length]--;
+			if (vw[length] == 0){
+				sw.erase(length);
+			}
+
+			if (vw[*u - x] == 0){
+				sw.insert(*u - x);
+			}
+			vw[*u - x]++;
+
+			if (vw[x - *l] == 0){
+				sw.insert(x - *l);
+			}
+			vw[x - *l]++;
+
+			gw.insert(x);
+		}
+		cout << (*sw.rbegin())*(*sh.rbegin())<<endl;
 	}
 }
