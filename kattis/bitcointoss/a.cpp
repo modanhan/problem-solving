@@ -22,13 +22,15 @@ int main(){
 			int ans=8137246;
 			
 			for(int offset=0;offset<a;offset++){
+                if(offset+(1<<a)*a>s.size())break;
 				vector<int> occ(1<<a,0);
 				int unique=0;
 				int i=offset;
-				for(;i<(1<<a)*a+offset;i+=a){
+				for(int j=0;j<(1<<a);j++){
 					int x=num(i,a);
 					if(occ.at(x)==0)unique++;
 					occ.at(x)++;
+					i+=a;
 				}
 				if(unique==1<<a){ans=offset;break;}
 				while(i+a<=s.size()){
